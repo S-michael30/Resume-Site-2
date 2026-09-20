@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Name — Résumé</title>
+<meta name="description" content="Résumé of Your Name, Your Profession.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f4;
+    --bg-panel: #ffffff;
+    --ink: #1c1e1f;
+    --ink-soft: #55585c;
+    --line: #e3ddd0;
+    --accent: #3d6b5c;
+    --accent-soft: #e9efec;
+    --accent-ink: #24463b;
+    --radius: 3px;
+    --serif: "Fraunces", Georgia, "Times New Roman", serif;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --bg: #15171a;
+      --bg-panel: #1c1f23;
+      --ink: #ece9e2;
+      --ink-soft: #a2a6ab;
+      --line: #33373c;
+      --accent: #6fae99;
+      --accent-soft: #223330;
+      --accent-ink: #a8d6c4;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #15171a;
+    --bg-panel: #1c1f23;
+    --ink: #ece9e2;
+    --ink-soft: #a2a6ab;
+    --line: #33373c;
+    --accent: #6fae99;
+    --accent-soft: #223330;
+    --accent-ink: #a8d6c4;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent-ink); }
+  a:focus-visible, button:focus-visible, .navlink:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -999px;
+    top: 0;
+    background: var(--accent);
+    color: #fff;
+    padding: 10px 16px;
+    z-index: 100;
+  }
+  .skip-link:focus { left: 8px; top: 8px; }
+
+  /* ---------- Layout shell ---------- */
+  .shell {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    max-width: 1080px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  @media (max-width: 860px) {
+    .shell { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar {
+    padding: 48px 32px;
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid var(--line);
+  }
+
+  @media (max-width: 860px) {
+    .sidebar {
+      position: static;
+      height: auto;
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+      padding: 28px 24px;
+    }
+  }
+
+  .identity h1 {
+    font-family: var(--serif);
+    font-size: 1.9rem;
+    font-weight: 500;
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .identity .tagline {
+    color: var(--ink-soft);
+    margin: 0 0 22px;
+    font-size: 0.98rem;
+  }
+
+  .contact-list {
+    list-style: none;
+    margin: 0 0 28px;
+    padding: 0;
+    font-size: 0.92rem;
+  }
+  .contact-list li {
+    margin-bottom: 6px;
+    color: var(--ink-soft);
+    word-break: break-word;
+  }
+  .contact-list a { text-decoration: none; color: var(--ink-soft); }
+  .contact-list a:hover { color: var(--accent-ink); text-decoration: underline; }
+
+  nav.toc { display: none; }
+  @media (min-width: 861px) {
+    nav.toc { display: block; }
+  }
+  nav.toc ul { list-style: none; margin: 0; padding: 0; }
+  nav.toc li { margin-bottom: 2px; }
+  .navlink {
+    display: block;
+    padding: 7px 10px;
+    margin-left: -10px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    border-left: 2px solid transparent;
+    transition: color .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .navlink:hover { color: var(--ink); background: var(--accent-soft); }
+  .navlink.active {
+    color: var(--accent-ink);
+    border-left-color: var(--accent);
+    font-weight: 600;
+    background: var(--accent-soft);
+  }
+
+  .sidebar-foot {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding-top: 20px;
+  }
+
+  .icon-btn {
+    border: 1px solid var(--line);
+    background: var(--bg-panel);
+    color: var(--ink-soft);
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.95rem;
+  }
+  .icon-btn:hover { color: var(--ink); border-color: var(--ink-soft); }
+
+  /* mobile top bar */
+  .mobile-bar { display: none; }
+  @media (max-width: 860px) {
+    .mobile-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 18px;
+    }
+    .mobile-nav {
+      display: none;
+      margin-top: 18px;
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+    }
+    .mobile-nav.open { display: block; }
+    .mobile-nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+    .mobile-nav .navlink { border-left: none; border: 1px solid var(--line); margin-left: 0; }
+    .mobile-nav .navlink.active { border-color: var(--accent); }
+  }
+
+  /* ---------- Main content ---------- */
+  main {
+    padding: 56px 48px 80px;
+  }
+  @media (max-width: 860px) { main { padding: 32px 24px 60px; } }
+
+  .resume-section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+  .resume-section:last-child { margin-bottom: 0; }
+
+  .section-head {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin: 0 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .lede { color: var(--ink-soft); max-width: 62ch; }
+
+  /* timeline-style entries — experience is genuinely sequential */
+  .entry-list { list-style: none; margin: 0; padding: 0; }
+  .entry {
+    position: relative;
+    padding: 0 0 28px 26px;
+    border-left: 1px solid var(--line);
+  }
+  .entry:last-child { padding-bottom: 0; }
+  .entry::before {
+    content: "";
+    position: absolute;
+    left: -4.5px;
+    top: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .entry-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 16px;
+    align-items: baseline;
+  }
+  .entry-title { font-weight: 600; font-size: 1.02rem; }
+  .entry-org { color: var(--accent-ink); font-weight: 500; }
+  .entry-dates {
+    color: var(--ink-soft);
+    font-size: 0.88rem;
+    white-space: nowrap;
+  }
+  .entry p { margin: 8px 0 0; color: var(--ink-soft); max-width: 68ch; }
+  .entry ul { margin: 8px 0 0; padding-left: 20px; color: var(--ink-soft); }
+  .entry li { margin-bottom: 4px; }
+
+  /* skills */
+  .skill-groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+  }
+  .skill-group h3 {
+    font-size: 0.85rem;
+    text-transform: none;
+    letter-spacing: 0.01em;
+    color: var(--ink-soft);
+    margin: 0 0 10px;
+    font-weight: 600;
+  }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill {
+    border: 1px solid var(--line);
+    background: var(--bg-panel);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--ink);
+  }
+
+  /* projects */
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  .project-card {
+    border: 1px solid var(--line);
+    background: var(--bg-panel);
+    padding: 18px 20px;
+    border-radius: var(--radius);
+  }
+  .project-card h3 { margin: 0 0 6px; font-size: 1rem; }
+  .project-card p { margin: 0; color: var(--ink-soft); font-size: 0.92rem; }
+  .project-card a {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 0.85rem;
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+  }
+
+  footer.page-footer {
+    padding: 24px 48px 48px;
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+  }
+  @media (max-width: 860px) { footer.page-footer { padding: 20px 24px 40px; } }
+
+  @media print {
+    .sidebar-foot, .mobile-bar, nav.toc { display: none !important; }
+    .shell { grid-template-columns: 1fr; }
+    .sidebar { position: static; height: auto; border: none; }
+    body { background: #fff; }
+    .entry { break-inside: avoid; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div>
+      <div class="identity">
+        <h1>Your Name</h1>
+        <p class="tagline">Your Tagline or Profession</p>
+      </div>
+
+      <ul class="contact-list">
+        <li><a href="mailto:your.email@example.com">your.email@example.com</a></li>
+        <li><a href="tel:+10000000000">+1 (000) 000-0000</a></li>
+        <li><a href="https://linkedin.com/in/your-linkedin-profile" target="_blank" rel="noopener">linkedin.com/in/your-profile</a></li>
+        <li>City, Country</li>
+      </ul>
+
+      <nav class="toc" aria-label="Sections">
+        <ul>
+          <li><a class="navlink" href="#about">About</a></li>
+          <li><a class="navlink" href="#experience">Experience</a></li>
+          <li><a class="navlink" href="#education">Education</a></li>
+          <li><a class="navlink" href="#skills">Skills</a></li>
+          <li><a class="navlink" href="#projects">Projects</a></li>
+        </ul>
+      </nav>
+
+      <!-- mobile menu -->
+      <div class="mobile-bar">
+        <span style="font-size:0.85rem;color:var(--ink-soft);">Menu</span>
+        <button class="icon-btn" id="mobileToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Toggle navigation">☰</button>
+      </div>
+      <nav class="mobile-nav" id="mobileNav" aria-label="Sections">
+        <ul>
+          <li><a class="navlink" href="#about">About</a></li>
+          <li><a class="navlink" href="#experience">Experience</a></li>
+          <li><a class="navlink" href="#education">Education</a></li>
+          <li><a class="navlink" href="#skills">Skills</a></li>
+          <li><a class="navlink" href="#projects">Projects</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="sidebar-foot">
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+      <button class="icon-btn" id="printBtn" aria-label="Print or save as PDF" title="Print / Save as PDF">⭳</button>
+    </div>
+  </aside>
+
+  <main id="main-content">
+    <section id="about" class="resume-section">
+      <h2 class="section-head">About</h2>
+      <p class="lede">A brief introduction about yourself — what you do, what you care about, and what kind of work you're looking for next.</p>
+    </section>
+
+    <section id="experience" class="resume-section">
+      <h2 class="section-head">Experience</h2>
+      <ul class="entry-list">
+        <li class="entry">
+          <div class="entry-head">
+            <span class="entry-title">Job Title <span class="entry-org">· Company Name</span></span>
+            <span class="entry-dates">Month Year — Present</span>
+          </div>
+          <p>One-line summary of scope and impact in this role.</p>
+          <ul>
+            <li>Key achievement or responsibility, ideally with a number attached.</li>
+            <li>Another concrete result you're proud of.</li>
+          </ul>
+        </li>
+        <li class="entry">
+          <div class="entry-head">
+            <span class="entry-title">Job Title <span class="entry-org">· Company Name</span></span>
+            <span class="entry-dates">Month Year — Month Year</span>
+          </div>
+          <p>One-line summary of scope and impact in this role.</p>
+          <ul>
+            <li>Key achievement or responsibility.</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <section id="education" class="resume-section">
+      <h2 class="section-head">Education</h2>
+      <ul class="entry-list">
+        <li class="entry">
+          <div class="entry-head">
+            <span class="entry-title">Degree <span class="entry-org">· Institution Name</span></span>
+            <span class="entry-dates">Graduation Year</span>
+          </div>
+          <p>Relevant honors, coursework, or activities.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section id="skills" class="resume-section">
+      <h2 class="section-head">Skills</h2>
+      <div class="skill-groups">
+        <div class="skill-group">
+          <h3>Core</h3>
+          <div class="pill-row">
+            <span class="pill">Skill 1</span>
+            <span class="pill">Skill 2</span>
+            <span class="pill">Skill 3</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Tools</h3>
+          <div class="pill-row">
+            <span class="pill">Tool 1</span>
+            <span class="pill">Tool 2</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="resume-section">
+      <h2 class="section-head">Projects</h2>
+      <div class="project-grid">
+        <div class="project-card">
+          <h3>Project Title</h3>
+          <p>Brief description of the project and the problem it solved.</p>
+          <a href="#" target="_blank" rel="noopener">View project →</a>
+        </div>
+        <div class="project-card">
+          <h3>Project Title</h3>
+          <p>Brief description of the project and the problem it solved.</p>
+          <a href="#" target="_blank" rel="noopener">View project →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer class="page-footer">
+  <p>Your Name — updated <span id="lastUpdated"></span></p>
+</footer>
+
+<script>
+(function () {
+  // ----- Theme toggle (persists per-viewer only, in-memory + localStorage) -----
+  var root = document.documentElement;
+  var themeBtn = document.getElementById('themeToggle');
+  try {
+    var saved = localStorage.getItem('resume-theme');
+    if (saved) root.setAttribute('data-theme', saved);
+  } catch (e) {}
+
+  themeBtn.addEventListener('click', function () {
+    var current = root.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('resume-theme', next); } catch (e) {}
+  });
+
+  // ----- Mobile nav toggle -----
+  var toggle = document.getElementById('mobileToggle');
+  var mobileNav = document.getElementById('mobileNav');
+  toggle.addEventListener('click', function () {
+    var isOpen = mobileNav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    toggle.textContent = isOpen ? '✕' : '☰';
+  });
+  mobileNav.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      mobileNav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.textContent = '☰';
+    });
+  });
+
+  // ----- Print / Save as PDF -----
+  document.getElementById('printBtn').addEventListener('click', function () {
+    window.print();
+  });
+
+  // ----- Scroll-spy active section highlighting -----
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.resume-section'));
+  var navlinks = Array.prototype.slice.call(document.querySelectorAll('.navlink'));
+
+  function setActive(id) {
+    navlinks.forEach(function (link) {
+      var match = link.getAttribute('href') === '#' + id;
+      link.classList.toggle('active', match);
+    });
+  }
+
+  if ('IntersectionObserver' in window && sections.length) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+    sections.forEach(function (s) { observer.observe(s); });
+  }
+
+  // ----- Footer date -----
+  var d = new Date();
+  document.getElementById('lastUpdated').textContent = d.toLocaleDateString(undefined, { year: 'numeric', month: 'long' });
+})();
+</script>
+</body>
+</html>
